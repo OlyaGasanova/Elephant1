@@ -11,6 +11,12 @@ public class LoadModel : MonoBehaviour
     void Start()
     {
 
+        
+
+
+        Assets.ThirdParty.CGALfirst();
+        Assets.ThirdParty.testVHACD();
+        Assets.ThirdParty.CGALsecond();
         Debug.Log("LoadModel");
 
         string path = Directory.GetCurrentDirectory() + "\\Assets";
@@ -18,7 +24,7 @@ public class LoadModel : MonoBehaviour
         string[] dirs = Directory.GetFiles(path, "*.obj");
         foreach (string dir in dirs)
         {
-           // Debug.Log(dir);
+            // Debug.Log(dir);
 
 
             GameObject CactusPart = new GameObject("CactusPart");
@@ -39,12 +45,13 @@ public class LoadModel : MonoBehaviour
             CactusPart.AddComponent<MeshCollider>().sharedMesh = null;
             CactusPart.GetComponent<MeshCollider>().sharedMesh = holderMesh;
             CactusPart.GetComponent<MeshCollider>().convex = true;
+
+            CactusPart.AddComponent<CactusPart>();
+
+
+
+
         }
-
-
-
-      
-
 
     }
 
