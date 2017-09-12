@@ -4,15 +4,16 @@ using UnityEngine;
 public class CactusPart : MonoBehaviour
 {
     private List<ContactPoint> _contacts = new List<ContactPoint>();
-
+    private bool flag = false;
     private void OnCollisionEnter(Collision collision)
     {
+       
         foreach (ContactPoint contact in collision.contacts)
         {
 
-            if (!contact.thisCollider.gameObject.transform.parent.Equals(contact.otherCollider.gameObject.transform.parent))
+            if (flag == false)
             {
-
+                flag = true;
                 if (!contact.otherCollider.gameObject.GetComponent<CharacterJoint>())
                 {
                     GameObject First = contact.thisCollider.gameObject;
@@ -30,7 +31,7 @@ public class CactusPart : MonoBehaviour
                 //Debug.DrawRay(contact.point, contact.normal, Color.white);
             }
         }
-        Debug.Break();
+        //Debug.Break();
     }
     void OnDrawGizmos()
     {
