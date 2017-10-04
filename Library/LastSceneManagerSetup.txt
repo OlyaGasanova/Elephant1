@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Cactus.unity
+- path: Assets/GA101.unity
   isLoaded: 1
   isActive: 1
