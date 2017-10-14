@@ -18,30 +18,52 @@ public class MoveJudge : MonoBehaviour
     private int count = 0;
     //private int creatu
     public int globalCount=1;
+    public int numberOfCycles =3;
     private int CreatureCount = 0;
     private int steps = 400;
+    public int localCount = 0;
 
     private FileStream fstream;
+
+    void Awake()
+    {
+        QualitySettings.vSyncCount = 0;
+        Application.targetFrameRate = -1;
+    }
 
 
     public void Start()
     {
-        for (int i = 0; i < 10; ++i) // todo: make many geerations
-        {
-            var creature = Instantiate(Resources.Load("creatureWorld")) as GameObject;
-            creature.transform.position += new Vector3(i*20,0,0);
-            var tm = creature.GetComponentInChildren<TestMove>();
-            tm.controller = this;
-        }
+        localCount = 0;
+       
+            for (int i = 0; i < 100; ++i) // todo: make many geerations
+            {
+                var creature = Instantiate(Resources.Load("creatureWorld")) as GameObject;
+                creature.transform.position += new Vector3(i * 30, 0, 0);
+                var tm = creature.GetComponentInChildren<TestMove>();
+                tm.controller = this;
+                localCount++;
+           
 
+            }
+        
 
     }
 
     public List<settings> GetNextSettings()
     {
-        var result = BestofCreatures[CreatureCount].Settings;
-        CreatureCount++;
+        //Debug.Log(CreatureCount+"    "+BestofCreatures.Count);
+        List<settings> result = new List<settings> { };
+        try
+        {
+            result = BestofCreatures[CreatureCount].Settings;
+            CreatureCount++;
+        }
+        catch(Exception e) {
+            Debug.Log(e.Message);
+        }
         return result;
+
     }
 
 
@@ -52,7 +74,7 @@ public class MoveJudge : MonoBehaviour
 
     public void CheckMeOut(float score, List<settings> my) // todo Mix generations
     {
-        if (globalCount==1) fstream = new FileStream(@"C:\Users\user\Documents\Software\Elephant\note.txt",
+        if (globalCount==1) fstream = new FileStream(@"note.txt",
         FileMode.OpenOrCreate);
         fstream.Close();
         best.Add(new Creature() {Settings = my, score = score});
@@ -60,8 +82,8 @@ public class MoveJudge : MonoBehaviour
        // Debug.Log("current worst score: " + best.Last().score);
        
         count++;
-
-        if (count == 50)
+        //Debug.Log(count+ " count");
+        if (count == 100)
         {
             Debug.Log(globalCount+" generation ended");
             best = best.OrderBy(creature => creature.score).ToList();
@@ -74,9 +96,9 @@ public class MoveJudge : MonoBehaviour
             //отобрать 8 лучших
             //скрестить -> 8*7*2 детей
 
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < 8; i++)
             {
-               for (int j = 0; j < 5; j++)
+               for (int j = 0; j < 8; j++)
                {
                    if (i != j)
                    {
@@ -129,9 +151,14 @@ public class MoveJudge : MonoBehaviour
             //Debug.Log(globalCount);
            // Debug.Log(BestofCreatures.Count);
             Debug.Log("Now next generation");
-            if (globalCount < 70) Start();
+            if (globalCount < numberOfCycles)
+            {
+        Debug.Log(numberOfCycles + " " + globalCount);
+                Start();
+            }
             else
             {
+                //TestMove.TurnOff();
                 String temp = "New Round! globalCount=" + globalCount + "\r\n";
                 for (int i = 0; i < best[1].Settings.Count; i++)
                 {
@@ -141,11 +168,11 @@ public class MoveJudge : MonoBehaviour
                 }
                 byte[] array = System.Text.Encoding.Default.GetBytes(temp);
                 // запись массива байтов в файл
-                File.AppendAllText(@"C:\Users\user\Documents\Software\Elephant\note.txt", temp, Encoding.UTF8);
+                File.AppendAllText(@"note.txt", temp, Encoding.UTF8);
                 Debug.Log("Текст записан в файл");
             }
         }
-       else if (count%10==0) Start();
+      // else if (count%10==0) Start();
 
     }
 

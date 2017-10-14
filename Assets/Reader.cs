@@ -18,7 +18,7 @@ using Object = UnityEngine.Object;
         {
             string line;
             System.IO.StreamReader file =
-            new System.IO.StreamReader(@"C: \Users\user\Documents\Software\Elephant\note.txt");
+            new System.IO.StreamReader(@"note.txt");
             while ((line = file.ReadLine()) != null)
             {
                 System.Console.WriteLine(line);

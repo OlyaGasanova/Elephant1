@@ -34,7 +34,7 @@ namespace Assets
             foreach (string dir in dirs)
             {
 
-                ProcessStartInfo startInfo = new ProcessStartInfo("C:/Users/user/Documents/Unity/Elephant/tools/testVHACD.exe");
+                ProcessStartInfo startInfo = new ProcessStartInfo("/tools/testVHACD.exe");
                 startInfo.WindowStyle = ProcessWindowStyle.Normal;
                 startInfo.Arguments = "--input " + dir + " --output " + dir/*.Replace(".obj", "(1).obj") --resolution 10000*/ + " --depth 4";
                 Process myProc = Process.Start(startInfo);
