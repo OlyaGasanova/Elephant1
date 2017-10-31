@@ -79,6 +79,7 @@
   <ItemGroup>
     <Compile Include="Assets\CactusHand.cs" />
     <Compile Include="Assets\CactusPart.cs" />
+    <Compile Include="Assets\CustomActions.cs" />
     <Compile Include="Assets\LoadModel.cs" />
     <Compile Include="Assets\MoveJudge.cs" />
     <Compile Include="Assets\ObjImporter.cs" />

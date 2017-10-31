@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
-
+using UnityEngine.UI;
 
 public class LoadModel : MonoBehaviour
 {
 
     void Start()
     {
+        
+
         var defaultMat = Resources.Load<Material>("OurMat");
         ObjImporter newMesh = new ObjImporter();
       

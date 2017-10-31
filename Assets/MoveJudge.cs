@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class MoveJudge : MonoBehaviour
@@ -18,7 +19,7 @@ public class MoveJudge : MonoBehaviour
     private int count = 0;
     //private int creatu
     public int globalCount=1;
-    public int numberOfCycles =3;
+    public int numberOfCycles =100;
     private int CreatureCount = 0;
     private int steps = 400;
     public int localCount = 0;
@@ -29,11 +30,17 @@ public class MoveJudge : MonoBehaviour
     {
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = -1;
+        Debug.Log("ffff");
+        Button btn = GameObject.Find("Button").GetComponent(typeof(Button)) as Button;
+        CustomActions actions = new CustomActions();
+        btn.onClick.AddListener(() => { actions.OnPress(); });
     }
 
 
     public void Start()
     {
+       
+
         localCount = 0;
        
             for (int i = 0; i < 100; ++i) // todo: make many geerations
@@ -52,7 +59,6 @@ public class MoveJudge : MonoBehaviour
 
     public List<settings> GetNextSettings()
     {
-        //Debug.Log(CreatureCount+"    "+BestofCreatures.Count);
         List<settings> result = new List<settings> { };
         try
         {
@@ -152,13 +158,9 @@ public class MoveJudge : MonoBehaviour
            // Debug.Log(BestofCreatures.Count);
             Debug.Log("Now next generation");
             if (globalCount < numberOfCycles)
-            {
-        Debug.Log(numberOfCycles + " " + globalCount);
                 Start();
-            }
             else
             {
-                //TestMove.TurnOff();
                 String temp = "New Round! globalCount=" + globalCount + "\r\n";
                 for (int i = 0; i < best[1].Settings.Count; i++)
                 {
