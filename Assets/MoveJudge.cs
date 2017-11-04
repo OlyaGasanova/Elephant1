@@ -19,10 +19,13 @@ public class MoveJudge : MonoBehaviour
     private int count = 0;
     //private int creatu
     public int globalCount=1;
-    public int numberOfCycles =100;
+    public static int numberOfCycles =100;
     private int CreatureCount = 0;
     private int steps = 400;
     public int localCount = 0;
+    public static bool canStart = false;
+    public static bool firstStart = true;
+    LineRenderer lineRenderer;
 
     private FileStream fstream;
 
@@ -31,9 +34,13 @@ public class MoveJudge : MonoBehaviour
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = -1;
         Debug.Log("ffff");
-        Button btn = GameObject.Find("Button").GetComponent(typeof(Button)) as Button;
-        CustomActions actions = new CustomActions();
-        btn.onClick.AddListener(() => { actions.OnPress(); });
+        lineRenderer = gameObject.AddComponent<LineRenderer>();
+        //lineRenderer.material = new Material(Shader.Find("Particles/Additive"));
+        lineRenderer.widthMultiplier = 2f;
+        lineRenderer.numPositions = 20;
+        lineRenderer.startColor = Color.black;
+        lineRenderer.endColor = Color.black;
+        // lineRenderer.SetPosition(2, new Vector3(0, 0, 0));
     }
 
 
@@ -42,7 +49,8 @@ public class MoveJudge : MonoBehaviour
        
 
         localCount = 0;
-       
+        if (canStart)
+        {
             for (int i = 0; i < 100; ++i) // todo: make many geerations
             {
                 var creature = Instantiate(Resources.Load("creatureWorld")) as GameObject;
@@ -50,11 +58,20 @@ public class MoveJudge : MonoBehaviour
                 var tm = creature.GetComponentInChildren<TestMove>();
                 tm.controller = this;
                 localCount++;
-           
+
 
             }
-        
+        }
 
+    }
+
+    public void Update()
+    {
+        if (canStart&&firstStart)
+        {
+            Start();
+            firstStart = false;
+        }
     }
 
     public List<settings> GetNextSettings()
@@ -94,6 +111,7 @@ public class MoveJudge : MonoBehaviour
             Debug.Log(globalCount+" generation ended");
             best = best.OrderBy(creature => creature.score).ToList();
             Debug.Log("current best score: " + best.First().score);
+            //lineRenderer.SetPosition(globalCount-1, new Vector3(globalCount-1+100, best.First().score+100, 100));
 
             count = 0;
             globalCount++;

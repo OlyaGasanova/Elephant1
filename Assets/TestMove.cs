@@ -41,7 +41,7 @@ public class TestMove : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-        if (controller.globalCount < controller.numberOfCycles)
+        if (controller.globalCount < MoveJudge.numberOfCycles)
         {
             if (controller.globalCount == 1) settings = controller.GetSettings();
             else
