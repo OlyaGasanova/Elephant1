@@ -33,14 +33,12 @@ public class MoveJudge : MonoBehaviour
     {
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = -1;
-        Debug.Log("ffff");
-        lineRenderer = gameObject.AddComponent<LineRenderer>();
-        //lineRenderer.material = new Material(Shader.Find("Particles/Additive"));
-        lineRenderer.widthMultiplier = 2f;
-        lineRenderer.numPositions = 20;
+        lineRenderer = GameObject.Find("LineRenderer").GetComponent(typeof(LineRenderer)) as LineRenderer;//gameObject.AddComponent<LineRenderer>();
+        lineRenderer.widthMultiplier = 0.2f;
+        lineRenderer.positionCount = 0;
         lineRenderer.startColor = Color.black;
         lineRenderer.endColor = Color.black;
-        // lineRenderer.SetPosition(2, new Vector3(0, 0, 0));
+        lineRenderer.loop = false;
     }
 
 
@@ -111,14 +109,15 @@ public class MoveJudge : MonoBehaviour
             Debug.Log(globalCount+" generation ended");
             best = best.OrderBy(creature => creature.score).ToList();
             Debug.Log("current best score: " + best.First().score);
-            //lineRenderer.SetPosition(globalCount-1, new Vector3(globalCount-1+100, best.First().score+100, 100));
+            lineRenderer.positionCount++;
+            lineRenderer.SetPosition(globalCount-1, new Vector3((globalCount-1),0, best.First().score));
 
             count = 0;
             globalCount++;
             CreatureCount = 0;
             BestofCreatures.Clear();
-            //отобрать 8 лучших
-            //скрестить -> 8*7*2 детей
+            //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ 8 пїЅпїЅпїЅпїЅпїЅпїЅ
+            //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ -> 8*7*2 пїЅпїЅпїЅпїЅпїЅ
 
             for (int i = 0; i < 8; i++)
             {
@@ -158,7 +157,7 @@ public class MoveJudge : MonoBehaviour
             }
             
 
-            //немножко мутировать
+            //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             for (int i = 0; i < BestofCreatures.Count; i++)
             {
                 for (int j = 0; j < 10; j++)
@@ -168,9 +167,9 @@ public class MoveJudge : MonoBehaviour
             }
 
             best.Clear();
-            //с полученными сеттингс запустить start
-            //очистить best
-            //пока глобал каунт!=10
+            //пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ start
+            //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ best
+            //пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ!=10
 
             //Debug.Log(globalCount);
            // Debug.Log(BestofCreatures.Count);
@@ -187,9 +186,9 @@ public class MoveJudge : MonoBehaviour
 
                 }
                 byte[] array = System.Text.Encoding.Default.GetBytes(temp);
-                // запись массива байтов в файл
+                // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ
                 File.AppendAllText(@"note.txt", temp, Encoding.UTF8);
-                Debug.Log("Текст записан в файл");
+                Debug.Log("пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ");
             }
         }
       // else if (count%10==0) Start();
