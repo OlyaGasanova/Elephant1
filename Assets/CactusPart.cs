@@ -21,12 +21,12 @@ public class CactusPart : MonoBehaviour
                     First.AddComponent<CharacterJoint>();
                     CharacterJoint connectbody = First.GetComponent<CharacterJoint>();
                     Rigidbody rb = Second.GetComponent<Rigidbody>();
-                    First.GetComponent<CharacterJoint>().connectedBody = Second.GetComponent<Rigidbody>(); 
+                    First.GetComponent<CharacterJoint>().connectedBody = Second.GetComponent<Rigidbody>();
                    // Debug.DrawRay(contact.point, contact.normal, Color.white);
                     print(contact.thisCollider.name + " hit " + contact.otherCollider.name);
                     //First.GetComponent<Renderer>().material.SetColor("_Albedo", Color.black);
-                   // Second.GetComponent<Renderer>().material.SetColor("_Albedo", Color.white);
-
+                    // Second.GetComponent<Renderer>().material.SetColor("_Albedo", Color.white);
+                    //Physics.IgnoreCollision(contact.thisCollider, contact.otherCollider, true);
                 }
                 //Debug.DrawRay(contact.point, contact.normal, Color.white);
             }

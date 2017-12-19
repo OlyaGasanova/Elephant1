@@ -19,6 +19,7 @@ public class TestMove : MonoBehaviour
     List<List<float>> Path = new List<List<float>>();
     List<float> partOfPath=new List<float>();
     SpringJoint[] Joints;
+    FixedJoint[] Joints2;
     public int step = 0;
     private GameObject go;
     private GameObject cactus;
@@ -54,51 +55,76 @@ public class TestMove : MonoBehaviour
             go.name = "TestCactus";
             go.transform.localPosition = Vector3.zero;
             Joints = go.GetComponentsInChildren<SpringJoint>();
+            var cj = Joints[0];
+            var bla = cj.transform.parent.GetComponentsInChildren<Rigidbody>();
+            foreach (var b in bla)
+                b.isKinematic = false;
+
+
         }
     }
 
+
+    
+
     // Update is called once per frame
-    void Update () {
-        if (settings.Count > step)
-        {
-            float currentStrength = 0;
-            float currentNumber = 0;
+    void Update()
+    {
 
-            
-            partOfPath.Add(settings[step].number);
-            partOfPath.Add(settings[step].strength);
-            try
-            {
-                Joints[settings[step].number].spring = settings[step].strength;
 
-            }
-            catch (System.IndexOutOfRangeException e)  // CS0168
+            if (settings.Count > step)
             {
-                Debug.Log(e.Message+Joints.Length);
-                Debug.Log(Joints.Length+"    trying get"+ settings[step].number);
-                Debug.Log(controller.globalCount+"   "+currentNumber);
+                float currentStrength = 0;
+                float currentNumber = 0;
 
+
+                partOfPath.Add(settings[step].number);
+                partOfPath.Add(settings[step].strength);
+                try
+                {
+                    var cj = Joints[settings[step].number];
+                    var bla = cj.transform.parent.GetComponentsInChildren<Rigidbody>();
+                    foreach (var b in bla)
+                        b.isKinematic = false;
+                    cj.connectedBody.isKinematic = false;
+                    Joints[settings[step].number].spring = settings[step].strength;
+                    bla = cj.transform.parent.GetComponentsInChildren<Rigidbody>();
+                    foreach (var b in bla)
+                        b.isKinematic = true;
+                    cj.connectedBody.isKinematic = true;
+
+                    // cj = sj;
+
+
+
+                }
+                catch (System.IndexOutOfRangeException e)  // CS0168
+                {
+                    Debug.Log(e.Message + Joints.Length);
+                    Debug.Log(Joints.Length + "    trying get" + settings[step].number);
+                    Debug.Log(controller.globalCount + "   " + currentNumber);
+
+                }
             }
-        }
-        step++;
-        if (step == settings.Count)
-	    {
-	        var position = Vector3.zero;
-            foreach(Transform t in go.transform)
+            step++;
+            if (step == settings.Count)
             {
-                position += t.position;
+                var position = Vector3.zero;
+                foreach (Transform t in go.transform)
+                {
+                    position += t.position;
+                }
+                position /= go.transform.childCount;
+                try
+                {
+                    controller.CheckMeOut(Vector3.Distance(position, target.transform.position), settings);
+                }
+                catch (Exception e)
+                {
+                    Debug.Log(e.Message);
+                    TurnOff();
+                }
+                Object.Destroy(gameObject.transform.parent.gameObject);
             }
-	        position /= go.transform.childCount;
-            try
-            {  
-                controller.CheckMeOut(Vector3.Distance(position, target.transform.position), settings);
-            }
-            catch(Exception e)
-            {
-                Debug.Log(e.Message);
-                TurnOff();
-            }
-            Object.Destroy(gameObject.transform.parent.gameObject);
-        }
     }
 }
