@@ -17,6 +17,9 @@ class CustomActions : MonoBehaviour
         Button btn = GameObject.Find("Button").GetComponent(typeof(Button)) as Button;
         btn.onClick.AddListener(() => { OnPress(); });
 
+        Button wieringReady = GameObject.Find("wieringReady").GetComponent(typeof(Button)) as Button;
+            wieringReady.onClick.AddListener(() => { ChangeScene(); });
+
         Button changeScene = GameObject.Find("ShowGraph").GetComponent(typeof(Button)) as Button;
             changeScene.onClick.AddListener(() => { ChangeScene(); });
 
@@ -35,6 +38,15 @@ class CustomActions : MonoBehaviour
        
 
 
+    }
+
+    public void wieringReady()
+    {
+        CactusPart[] allObjects = UnityEngine.Object.FindObjectsOfType<CactusPart>();
+        foreach (CactusPart go in allObjects)
+        {
+            go.flag = true;
+        }
     }
 
     public void OnPress()

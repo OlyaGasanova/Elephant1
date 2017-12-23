@@ -138,14 +138,15 @@ public class LoadModel : MonoBehaviour
     void Start() {
         var defaultMat = Resources.Load<Material>("OurMat");
         ObjImporter newMesh = new ObjImporter();
+        if (Directory.GetFiles(Directory.GetCurrentDirectory() + "/data/", "*second*").Length <= 0)
+        {
+            Assets.ThirdParty.CGALfirst();
+            Assets.ThirdParty.meshConv();
+            Assets.ThirdParty.CGALFilledIn();
+            Assets.ThirdParty.meshConvReverse();
+            Assets.ThirdParty.testVHACD();
+        }
 
-      /*  Assets.ThirdParty.CGALfirst();
-        Assets.ThirdParty.meshConv();
-        Assets.ThirdParty.CGALFilledIn();
-        Assets.ThirdParty.meshConvReverse();
-        Assets.ThirdParty.testVHACD();*/
-
-        //Assets.ThirdParty.CGALsecond();
         Debug.Log("LoadModel");
 
         string path = Directory.GetCurrentDirectory() + "\\data";
@@ -201,7 +202,9 @@ public class LoadModel : MonoBehaviour
             MainCactusPart.AddComponent<CactusPart>();
             MeshRenderer renderer = MainCactusPart.AddComponent<MeshRenderer>();
             MeshFilter filter = MainCactusPart.AddComponent<MeshFilter>();
+            renderer.material = new Material(Shader.Find("Standard"));
             filter.mesh = holderMesh1;
+            filter.mesh.RecalculateNormals();
             foreach (var collider1 in sbparts)
             {
                 foreach (var collider2 in sbparts)
