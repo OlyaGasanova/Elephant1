@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using UnityEditor;
 
 public class ObjImporter
 {
@@ -55,7 +54,7 @@ public class ObjImporter
         mesh.triangles = newMesh.triangles;
 
         mesh.RecalculateBounds();
-        MeshUtility.Optimize(mesh);
+        //MeshUtility.Optimize(mesh);
 
         return mesh;
     }
@@ -162,6 +161,7 @@ public class ObjImporter
                 else
                 {
                     currentText = currentText.Trim();
+                    currentText = currentText.Replace('.', ',');
                     brokenString = currentText.Split(splitIdentifier, 50);
                     switch (brokenString[0])
                     {
@@ -174,6 +174,7 @@ public class ObjImporter
                         case "mtllib":
                             break;
                         case "v":
+
                             mesh.vertices[v] = new Vector3(System.Convert.ToSingle(brokenString[1]), System.Convert.ToSingle(brokenString[2]),
                                                      System.Convert.ToSingle(brokenString[3]));
                             v++;

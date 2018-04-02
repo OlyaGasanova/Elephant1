@@ -1,45 +1,73 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class CactusPart : MonoBehaviour
 {
+
     private List<ContactPoint> _contacts = new List<ContactPoint>();
     public bool flag = false;
     private bool canContinue = false;
-    private void OnCollisionEnter(Collision collision)
+
+    public float Volume
     {
-       
+        get
+        {
+            return GetComponents<Collider>().Aggregate(0f, (vol, coll) => vol += coll.bounds.size.sqrMagnitude);
+        }
+    }
+    private void OnCollisionStay(Collision collision)
+    {
         foreach (ContactPoint contact in collision.contacts)
         {
-
             if (flag == false)
             {
-                if (contact.otherCollider.gameObject.GetComponent<CactusPart>())
+                var otherPart = contact.otherCollider.gameObject.GetComponent<CactusPart>();
+                if (otherPart)
                 {
-                    flag = true;
+                    //flag = true;
 
-                    GameObject First = contact.thisCollider.gameObject;
-                    GameObject Second = contact.otherCollider.gameObject;
+                    GameObject first = contact.thisCollider.gameObject;
+                    GameObject second = contact.otherCollider.gameObject;
+                    var currentJoint = first.GetComponent<CharacterJoint>();
 
-                    //замена на бОльшую часть
-                    if (First.GetComponent<CharacterJoint>())
+                    if (currentJoint)
                     {
-                        var firstConnColl = First.GetComponent<CharacterJoint>().connectedBody.GetComponent<Collider>();
-                        var secConnColl = Second.GetComponent<Collider>();
-                        if (firstConnColl.bounds.size.sqrMagnitude > secConnColl.bounds.size.sqrMagnitude) { }
-                        else { First.GetComponent<CharacterJoint>().connectedBody = Second.GetComponent<Rigidbody>(); }
+                        var currentPartnerPart = currentJoint.connectedBody.GetComponent<CactusPart>();
+                        if (currentPartnerPart != null && (currentPartnerPart.name == second.name || otherPart.Volume < currentPartnerPart.Volume))
+                        {
+                            continue;
+                        }
+                    }
+
+                    if (Volume > otherPart.Volume)
+                    {
+                        continue;
+                    }
+                    //print(Volume + " vs " + otherPart.Volume);
+                    //замена на бОльшую часть
+                    if (first.GetComponent<CharacterJoint>())
+                    {
+                        var oldConn = first.GetComponent<CharacterJoint>().connectedBody.GetComponent<CactusPart>();
+                        var secConn = second.GetComponent<CactusPart>();
+                        if (oldConn.Volume < secConn.Volume)
+                        {
+                            first.GetComponent<CharacterJoint>().connectedBody = second.GetComponent<Rigidbody>();
+                        }
                     }
                     else {
+                        var joint = first.AddComponent<CharacterJoint>();
+                        joint.lowTwistLimit = new SoftJointLimit() { limit = 0.1f };
+                        joint.highTwistLimit = new SoftJointLimit() { limit = 0.1f };
+                        joint.swing1Limit = new SoftJointLimit() { limit = 0.1f };
+                        joint.swing2Limit = new SoftJointLimit() { limit = 0.1f };
 
-                        First.AddComponent<CharacterJoint>();
-                        CharacterJoint connectbody = First.GetComponent<CharacterJoint>();
-                        Rigidbody rb = Second.GetComponent<Rigidbody>();
-                        First.GetComponent<CharacterJoint>().connectedBody = Second.GetComponent<Rigidbody>();
-                        print(contact.thisCollider.name + " hit " + contact.otherCollider.name);
+                        var rb = second.GetComponent<Rigidbody>();
+                        joint.connectedBody = rb;
+                       // print(first.name + " hit " + second.name);
 
                     }
-
                 }
             }
         }

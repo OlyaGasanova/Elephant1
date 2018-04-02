@@ -51,95 +51,35 @@ Examples:
 	 log                                         log.txt
 + Load mesh
 + Voxelization
-	 dim = 64	-> 14490 voxels
-	 time 0.0204008s
+	 dim = 64	-> 12505 voxels
+	 time 0.0161504s
 + Compute primitive set
-	 # primitives               14490
-	 # inside surface           7527
-	 # on surface               6963
-	 time 0.0046315s
+	 # primitives               12505
+	 # inside surface           7837
+	 # on surface               4668
+	 time 0.00821739s
 + Approximate Convex Decomposition
 	 Subdivision level 1
-	 -> Part[0] C  = 0.553977, E  = 0.216475, VS = 6963, VI = 7527
-		 [Regular sampling] Number of clipping planes 35
+	 -> Part[0] C  = 0.296223, E  = 0.265341, VS = 4668, VI = 7837
+		 [Regular sampling] Number of clipping planes 28
 
-			 Best  0020 T=0.324088 C=0.296841 B=0.007893 S=0.019354 (0.0, 1.0, 0.0, -0.371)
+			 Best  0010 T=0.204291 C=0.184928 B=0.006151 S=0.013211 (0.0, 1.0, 0.0, -0.241)
 
 		 [Refining] Number of clipping planes 9
 
-			 Best  0002 T=0.328720 C=0.301972 B=0.007394 S=0.019354 (0.0, 1.0, 0.0, -0.358)
+			 Best  0004 T=0.205423 C=0.186061 B=0.006151 S=0.013211 (0.0, 1.0, 0.0, -0.241)
 
 	 Subdivision level 2
-	 -> Part[0] C  = 0.275116, E  = 0.174815, VS = 5623, VI = 5958
-		 [Regular sampling] Number of clipping planes 30
-
-			 Best  0024 T=0.225305 C=0.223148 B=0.002157 S=0.000000 (0.0, 0.0, 1.0, -0.094)
-
-		 [Refining] Number of clipping planes 9
-
-			 Best  0006 T=0.222292 C=0.220738 B=0.001554 S=0.000000 (0.0, 0.0, 1.0, -0.107)
-
-	 -> Part[1] C  = 0.0493438, E  = 0.0471624, VS = 1517, VI = 1392
-		 [Regular sampling] Number of clipping planes 18
-
-			 Best  0007 T=0.031014 C=0.030989 B=0.000025 S=0.000000 (0.0, 1.0, 0.0, -0.415)
-
-		 [Refining] Number of clipping planes 9
-
-			 Best  0002 T=0.030548 C=0.030476 B=0.000072 S=0.000000 (0.0, 1.0, 0.0, -0.402)
-
-	 Subdivision level 3
-	 -> Part[0] C  = 0.0829016, E  = 0.0695156, VS = 2236, VI = 1720
-		 [Regular sampling] Number of clipping planes 21
-
-			 Best  0013 T=0.066808 C=0.064023 B=0.000376 S=0.002409 (0.0, 1.0, 0.0, -0.277)
-
-		 [Refining] Number of clipping planes 9
-
-			 Best  0002 T=0.062916 C=0.060161 B=0.000345 S=0.002409 (0.0, 1.0, 0.0, -0.265)
-
-	 -> Part[1] C  = 0.140766, E  = 0.119476, VS = 3843, VI = 3782
-		 [Regular sampling] Number of clipping planes 26
-
-			 Best  0014 T=0.112376 C=0.108799 B=0.000268 S=0.003310 (0.0, 1.0, 0.0, -0.221)
-
-		 [Refining] Number of clipping planes 9
-
-			 Best  0004 T=0.112372 C=0.108794 B=0.000268 S=0.003310 (0.0, 1.0, 0.0, -0.221)
-
-	 -> Part[2] C  = 0.00810304, E  = 0.0181251, VS = 583, VI = 397
-	 -> Part[3] C  = 0.0225676, E  = 0.0341671, VS = 1099, VI = 830
-	 Subdivision level 4
-	 -> Part[0] C  = 0.0588436, E  = 0.0558363, VS = 1796, VI = 1535
-		 [Regular sampling] Number of clipping planes 18
-
-			 Best  0016 T=0.033567 C=0.033535 B=0.000032 S=0.000000 (0.0, 0.0, 1.0, -0.069)
-
-		 [Refining] Number of clipping planes 9
-
-			 Best  0003 T=0.030666 C=0.030662 B=0.000004 S=0.000000 (0.0, 0.0, 1.0, -0.063)
-
-	 -> Part[1] C  = 0.00731473, E  = 0.0150161, VS = 483, VI = 142
-	 -> Part[2] C  = 0.0456121, E  = 0.0534114, VS = 1718, VI = 1477
-	 -> Part[3] C  = 0.066459, E  = 0.0719717, VS = 2315, VI = 2115
-+ Generate 7 convex-hulls 
-	 time 0.588029s
+	 -> Part[0] C  = 0.0359611, E  = 0.0712805, VS = 1254, VI = 1309
+	 -> Part[1] C  = 0.158814, E  = 0.204406, VS = 3596, VI = 6346
++ Generate 2 convex-hulls 
+	 time 0.188984s
 + Merge Convex Hulls
-	 time 0.00763833s
-+ Simplify 7 convex-hulls 
-		 Simplify CH[00000] 48 V, 92 T
-		 Simplify CH[00001] 107 V, 210 T
-		 Simplify CH[00002] 65 V, 126 T
-		 Simplify CH[00003] 96 V, 188 T
-		 Simplify CH[00004] 95 V, 186 T
-		 Simplify CH[00005] 68 V, 132 T
-		 Simplify CH[00006] 69 V, 134 T
-	 time 0.0463188s
-+ Generate output: 7 convex-hulls 
-	 CH[00000] 38 V, 72 T
+	 time 0.00421582s
++ Simplify 2 convex-hulls 
+		 Simplify CH[00000] 66 V, 128 T
+		 Simplify CH[00001] 148 V, 292 T
+	 time 0.0234547s
++ Generate output: 2 convex-hulls 
+	 CH[00000] 52 V, 100 T
 	 CH[00001] 64 V, 124 T
-	 CH[00002] 45 V, 86 T
-	 CH[00003] 58 V, 112 T
-	 CH[00004] 50 V, 96 T
-	 CH[00005] 54 V, 104 T
-	 CH[00006] 42 V, 80 T

@@ -106,9 +106,9 @@ public class MoveJudge : MonoBehaviour
         //Debug.Log(count+ " count");
         if (count == 100)
         {
-            Debug.Log(globalCount+" generation ended");
+            //Debug.Log(globalCount+" generation ended");
             best = best.OrderBy(creature => creature.score).ToList();
-            Debug.Log("current best score: " + best.First().score);
+            //Debug.Log("current best score: " + best.First().score);
             lineRenderer.positionCount++;
             lineRenderer.SetPosition(globalCount-1, new Vector3((globalCount-1),0, best.First().score));
 
@@ -173,7 +173,7 @@ public class MoveJudge : MonoBehaviour
 
             //Debug.Log(globalCount);
            // Debug.Log(BestofCreatures.Count);
-            Debug.Log("Now next generation");
+            //Debug.Log("Now next generation");
             if (globalCount < numberOfCycles)
                 Start();
             else
@@ -188,7 +188,7 @@ public class MoveJudge : MonoBehaviour
                 byte[] array = System.Text.Encoding.Default.GetBytes(temp);
                 // ������ ������� ������ � ����
                 File.AppendAllText(@"note.txt", temp, Encoding.UTF8);
-                Debug.Log("����� ������� � ����");
+                //Debug.Log("����� ������� � ����");
             }
         }
       // else if (count%10==0) Start();

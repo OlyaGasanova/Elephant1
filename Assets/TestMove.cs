@@ -19,7 +19,6 @@ public class TestMove : MonoBehaviour
     List<List<float>> Path = new List<List<float>>();
     List<float> partOfPath=new List<float>();
     SpringJoint[] Joints;
-    FixedJoint[] Joints2;
     public int step = 0;
     private GameObject go;
     private GameObject cactus;
@@ -34,10 +33,6 @@ public class TestMove : MonoBehaviour
         Application.targetFrameRate = -1;
     }
 
-    public void TurnOff()
-    {
-        this.enabled = false;
-    }
 
     // Use this for initialization
     void Start ()
@@ -48,7 +43,6 @@ public class TestMove : MonoBehaviour
             else
             {
                 settings = controller.GetNextSettings();
-                // Debug.Log(controller.globalCount+"   current "+controller.localCount);
             }
 
             go = Instantiate(Resources.Load("AnimalКобаска"), transform) as GameObject;
@@ -82,20 +76,7 @@ public class TestMove : MonoBehaviour
                 partOfPath.Add(settings[step].strength);
                 try
                 {
-                    var cj = Joints[settings[step].number];
-                    var bla = cj.transform.parent.GetComponentsInChildren<Rigidbody>();
-                    foreach (var b in bla)
-                        b.isKinematic = false;
-                    cj.connectedBody.isKinematic = false;
                     Joints[settings[step].number].spring = settings[step].strength;
-                    bla = cj.transform.parent.GetComponentsInChildren<Rigidbody>();
-                    foreach (var b in bla)
-                        b.isKinematic = true;
-                    cj.connectedBody.isKinematic = true;
-
-                    // cj = sj;
-
-
 
                 }
                 catch (System.IndexOutOfRangeException e)  // CS0168
@@ -122,7 +103,6 @@ public class TestMove : MonoBehaviour
                 catch (Exception e)
                 {
                     Debug.Log(e.Message);
-                    TurnOff();
                 }
                 Object.Destroy(gameObject.transform.parent.gameObject);
             }
